@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
-import Image from 'gatsby-image';
+import Img from 'gatsby-image';
 
 const Bio = () => {
   const data = useStaticQuery(graphql`
@@ -16,11 +16,9 @@ const Bio = () => {
           }
         }
       }
-      avatar: file(absolutePath: { regex: "/thumbnail.jpg/" }) {
-        childImageSharp {
-          fixed(width: 50, height: 50, quality: 95) {
-            ...GatsbyImageSharpFixed
-          }
+      thumbnail: contentfulAsset(title: { eq: "thumbnail" }) {
+        fixed(width: 50, height: 50, quality: 95) {
+          ...GatsbyContentfulFixed
         }
       }
     }
@@ -29,13 +27,13 @@ const Bio = () => {
   const author = data.site.siteMetadata?.author;
   const social = data.site.siteMetadata?.social;
 
-  const avatar = data.avatar?.childImageSharp?.fixed;
+  const thumbnail = data.thumbnail?.fixed;
 
   return (
     <div className="bio">
-      {avatar && (
-        <Image
-          fixed={avatar}
+      {thumbnail && (
+        <Img
+          fixed={thumbnail}
           alt={author?.name || 'Harry Chang'}
           className="bio-avatar"
           imgStyle={{
