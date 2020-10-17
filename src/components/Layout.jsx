@@ -21,11 +21,11 @@ const Layout = ({ location, children, title }) => {
   const isRootPath = location.pathname === rootPath;
   const header = isRootPath ? (
     <h1 className="main-heading">
-      <Link to="/">{title}</Link>
+      <Link to="/">{title || 'SITE TITLE'}</Link>
     </h1>
   ) : (
     <Link className="header-link-home" to="/">
-      {title}
+      {title || 'SITE TITLE'}
     </Link>
   );
 
@@ -37,7 +37,7 @@ const Layout = ({ location, children, title }) => {
       <main>{children}</main>
       <footer>
         <a
-          href={`https://twitter.com/${social?.twitter || 'harry830622'}`}
+          href={`https://twitter.com/${social?.twitter || ''}`}
           target="_blank"
           rel="noreferrer"
         >
@@ -45,7 +45,7 @@ const Layout = ({ location, children, title }) => {
         </a>
         {` • `}
         <a
-          href={`https://github.com/${social?.github || 'harry830622'}`}
+          href={`https://github.com/${social?.github || ''}`}
           target="_blank"
           rel="noreferrer"
         >
@@ -53,9 +53,7 @@ const Layout = ({ location, children, title }) => {
         </a>
         {` • `}
         <a
-          href={`https://www.linkedin.com/in/${
-            social?.linkedin || 'harry830622'
-          }`}
+          href={`https://www.linkedin.com/in/${social?.linkedin || ''}`}
           target="_blank"
           rel="noreferrer"
         >
@@ -66,8 +64,12 @@ const Layout = ({ location, children, title }) => {
   );
 };
 
+Layout.defaultProps = {
+  title: '',
+};
+
 Layout.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };
 
 export default Layout;

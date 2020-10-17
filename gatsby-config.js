@@ -2,13 +2,14 @@ require('dotenv').config();
 
 module.exports = {
   siteMetadata: {
+    siteUrl: `https://yhchang.me`,
     title: `yhchang`,
     author: {
       name: `Harry Chang`,
-      summary: `I build cool things.`,
+      summary: `I build cool stuff.`,
     },
-    description: `Talks about code, entrepreneurship and life.`,
-    siteUrl: `https://yhchang.me/`,
+    description: `Personal blog by Harry Chang. I build cool stuff.`,
+    keywords: ['blog', 'code', 'entrepreneurship', 'life'],
     social: {
       twitter: `harry830622`,
       github: `harry830622`,

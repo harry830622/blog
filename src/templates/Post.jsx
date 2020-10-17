@@ -14,8 +14,13 @@ const Post = ({ location, data, pageContext }) => {
   const { previous, next } = pageContext;
 
   return (
-    <Layout location={location} title={siteTitle || 'yhchang'}>
-      <SEO title={post.title} description={post.content.childMdx.excerpt} />
+    <Layout location={location} title={siteTitle}>
+      <SEO
+        location={location}
+        title={post.title}
+        description={post.content.childMdx.excerpt}
+        keywords={post.tags}
+      />
       <article
         className="blog-post"
         itemScope

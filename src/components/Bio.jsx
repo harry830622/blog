@@ -34,7 +34,7 @@ const Bio = () => {
       {thumbnail && (
         <Img
           fixed={thumbnail}
-          alt={author?.name || 'Harry Chang'}
+          alt={author?.name || 'YOUR NAME'}
           className="bio-avatar"
           imgStyle={{
             borderRadius: `50%`,
@@ -44,15 +44,15 @@ const Bio = () => {
       <p>
         {`Personal blog by `}
         <a
-          href={`https://twitter.com/${social?.twitter || 'harry830622'}`}
+          href={`https://twitter.com/${social?.twitter || ''}`}
           target="_blank"
           rel="noreferrer"
         >
-          {author?.name || 'Harry Chang'}
+          {author?.name || 'YOUR NAME'}
         </a>
         .
         <br />
-        {author?.summary || 'I build cool things.'}
+        {author?.summary || 'YOUR SUMMARY'}
       </p>
     </div>
   );

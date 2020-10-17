@@ -10,8 +10,12 @@ export default ({ location, data }) => {
   const posts = data.allContentfulPost?.nodes;
 
   return (
-    <Layout location={location} title={siteTitle || 'yhchang'}>
-      <SEO title={`${siteTitle} — A Blog by Harry Chang`} isTitleOverwritten />
+    <Layout location={location} title={siteTitle}>
+      <SEO
+        location={location}
+        title={`${siteTitle} — A Blog by Harry Chang`}
+        isTitleOverwritten
+      />
       <Bio />
       {posts.length > 0 ? (
         posts.map((post) => (

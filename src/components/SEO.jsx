@@ -3,14 +3,25 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { useStaticQuery, graphql } from 'gatsby';
 
-const SEO = ({ lang, meta, title, isTitleOverwritten, description }) => {
+const SEO = ({
+  location,
+  lang,
+  title,
+  isTitleOverwritten,
+  description,
+  keywords,
+  imageUrl,
+  meta,
+}) => {
   const { site } = useStaticQuery(
     graphql`
       query {
         site {
           siteMetadata {
+            siteUrl
             title
             description
+            keywords
             social {
               twitter
             }
@@ -20,8 +31,11 @@ const SEO = ({ lang, meta, title, isTitleOverwritten, description }) => {
     `,
   );
 
+  const url = `${site.siteMetadata.siteUrl}${location.pathname}`;
   const defaultTitle = site.siteMetadata?.title;
   const metaDescription = description || site.siteMetadata?.description;
+  const metaKeywords =
+    keywords.length > 0 ? keywords : site.siteMetadata?.keywords;
 
   return (
     <Helmet
@@ -30,12 +44,25 @@ const SEO = ({ lang, meta, title, isTitleOverwritten, description }) => {
       }}
       title={title}
       titleTemplate={
-        isTitleOverwritten ? null : `%s — ${defaultTitle || 'yhchang'}`
+        isTitleOverwritten ? null : `%s — ${defaultTitle || 'SITE TITLE'}`
       }
+      link={[{ rel: 'canonical', href: url }]}
       meta={[
         {
           name: `description`,
-          content: metaDescription,
+          content: metaDescription || 'SITE DESCRIPTION',
+        },
+        {
+          name: `keywords`,
+          content: (metaKeywords || ['blog']).join(','),
+        },
+        {
+          property: `og:type`,
+          content: `website`,
+        },
+        {
+          property: `og:url`,
+          content: url,
         },
         {
           property: `og:title`,
@@ -46,18 +73,6 @@ const SEO = ({ lang, meta, title, isTitleOverwritten, description }) => {
           content: metaDescription,
         },
         {
-          property: `og:type`,
-          content: `website`,
-        },
-        {
-          name: `twitter:card`,
-          content: `summary`,
-        },
-        {
-          name: `twitter:creator`,
-          content: site.siteMetadata?.social?.twitter || 'harry830622',
-        },
-        {
           name: `twitter:title`,
           content: title,
         },
@@ -65,24 +80,54 @@ const SEO = ({ lang, meta, title, isTitleOverwritten, description }) => {
           name: `twitter:description`,
           content: metaDescription,
         },
-      ].concat(meta)}
+        ...(site.siteMetadata?.social?.twitter
+          ? [
+              {
+                name: `twitter:creator`,
+                content: `@${site.siteMetadata?.social?.twitter}`,
+              },
+            ]
+          : []),
+        ...(imageUrl
+          ? [
+              {
+                property: 'og:image',
+                content: imageUrl,
+              },
+              {
+                name: 'twitter:card',
+                content: 'summary_large_image',
+              },
+            ]
+          : [
+              {
+                name: `twitter:card`,
+                content: `summary`,
+              },
+            ]),
+        ...meta,
+      ]}
     />
   );
 };
 
 SEO.defaultProps = {
   lang: `en`,
-  meta: [],
   isTitleOverwritten: false,
-  description: ``,
+  description: '',
+  keywords: [],
+  imageUrl: '',
+  meta: [],
 };
 
 SEO.propTypes = {
   lang: PropTypes.string,
-  meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
   isTitleOverwritten: PropTypes.bool,
   description: PropTypes.string,
+  keywords: PropTypes.arrayOf(PropTypes.string),
+  imageUrl: PropTypes.string,
+  meta: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default SEO;
