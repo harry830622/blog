@@ -6,38 +6,42 @@ import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 
 export default ({ location, data }) => {
-  const siteTitle = data.site.siteMetadata?.title || 'yhchang';
-  const posts = data.allContentfulPost?.nodes || [];
+  const siteTitle = data.site.siteMetadata?.title;
+  const posts = data.allContentfulPost?.nodes;
 
   return (
-    <Layout location={location} title={siteTitle}>
-      <SEO title="Posts" />
+    <Layout location={location} title={siteTitle || 'yhchang'}>
+      <SEO title={`${siteTitle} — A Blog by Harry Chang`} isTitleOverwritten />
       <Bio />
-      {posts.map((post) => (
-        <article
-          key={post.slug}
-          className="post-list-item"
-          itemScope
-          itemType="http://schema.org/Article"
-        >
-          <header>
-            <h2>
-              <Link to={`/posts/${post.slug}`} itemProp="url">
-                <span itemProp="headline">{post.title}</span>
-              </Link>
-            </h2>
-            <small>{new Date(post.updatedAt).toDateString()}</small>
-          </header>
-          <section>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: post.content.childMdx.excerpt,
-              }}
-              itemProp="description"
-            />
-          </section>
-        </article>
-      ))}
+      {posts.length > 0 ? (
+        posts.map((post) => (
+          <article
+            key={post.slug}
+            className="post-list-item"
+            itemScope
+            itemType="http://schema.org/Article"
+          >
+            <header>
+              <h2>
+                <Link to={`/posts/${post.slug}`} itemProp="url">
+                  <span itemProp="headline">{post.title}</span>
+                </Link>
+              </h2>
+              <small>{new Date(post.updatedAt).toDateString()}</small>
+            </header>
+            <section>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: post.content.childMdx.excerpt,
+                }}
+                itemProp="description"
+              />
+            </section>
+          </article>
+        ))
+      ) : (
+        <p>No blog posts found. Add MDX posts in your Contentful space.</p>
+      )}
     </Layout>
   );
 };

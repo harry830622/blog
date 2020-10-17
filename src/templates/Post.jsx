@@ -10,11 +10,11 @@ import SEO from '../components/SEO';
 
 const Post = ({ location, data, pageContext }) => {
   const post = data.contentfulPost;
-  const siteTitle = data.site.siteMetadata?.title || 'yhchang';
+  const siteTitle = data.site.siteMetadata?.title;
   const { previous, next } = pageContext;
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout location={location} title={siteTitle || 'yhchang'}>
       <SEO title={post.title} description={post.content.childMdx.excerpt} />
       <article
         className="blog-post"
