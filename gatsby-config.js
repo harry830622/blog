@@ -3,6 +3,7 @@ require('dotenv').config();
 module.exports = {
   siteMetadata: {
     siteUrl: `https://yhchang.me`,
+    lang: 'zh-TW',
     title: `yhchang`,
     author: {
       name: `Harry Chang`,
@@ -46,12 +47,15 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.0725rem`,
             },
           },
+          `gatsby-remark-external-links`,
+          `gatsby-remark-autolink-headers`,
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],
       },
     },
+    `gatsby-plugin-emotion`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-google-analytics`,

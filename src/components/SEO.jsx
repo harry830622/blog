@@ -19,6 +19,7 @@ const SEO = ({
         site {
           siteMetadata {
             siteUrl
+            lang
             title
             description
             keywords
@@ -32,6 +33,7 @@ const SEO = ({
   );
 
   const url = `${site.siteMetadata.siteUrl}${location.pathname}`;
+  const defaultLang = site.siteMetadata?.lang;
   const defaultTitle = site.siteMetadata?.title;
   const metaDescription = description || site.siteMetadata?.description;
   const metaKeywords =
@@ -40,7 +42,7 @@ const SEO = ({
   return (
     <Helmet
       htmlAttributes={{
-        lang,
+        lang: lang || defaultLang || 'en',
       }}
       title={title}
       titleTemplate={
@@ -112,7 +114,7 @@ const SEO = ({
 };
 
 SEO.defaultProps = {
-  lang: `en`,
+  lang: '',
   isTitleOverwritten: false,
   description: '',
   keywords: [],

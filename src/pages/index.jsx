@@ -65,7 +65,7 @@ export const query = graphql`
         updatedAt
         content {
           childMdx {
-            excerpt
+            excerpt(truncate: true)
           }
         }
       }
